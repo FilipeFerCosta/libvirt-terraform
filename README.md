@@ -1,4 +1,5 @@
 # Installation and setup of libvirt-terraform to use at a local machine. 
+Ideal for homelab.
 # CentOs 9
 # Data structure of HCL
 
