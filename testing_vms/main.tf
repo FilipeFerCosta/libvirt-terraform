@@ -93,12 +93,12 @@ resource "libvirt_network" "vm_public_network" {
       name      = "${var.VM_HOSTNAME}_network"
       mode      = "nat"
       domain    = "${var.VM_HOSTNAME}.local"
-      address   = ["${var.VM_CIDR_RANGE}"]
+      addresses = ["${var.VM_CIDR_RANGE}"]
       dhcp {
-        enable = true
+        enabled = true
       }
       dns {
-        enable = true
+        enabled = true
       }
 }
 
