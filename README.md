@@ -1,5 +1,5 @@
 # Installation and setup of libvirt-terraform to use at a local machine. 
-Ideal for homelab.
+Ideal for homelab. *Still being build*
 # CentOs 9
 
 
@@ -45,6 +45,23 @@ and than use:
 terraform init
 ```
 
+## Just listing the main comands of terraform.
+```console
+terraform init
+```
+```console
+terraform validate
+```
+```console
+terraform pan
+```
+```console
+terraform apply
+```
+```console
+terraform destroy
+```
+
 # Data structure of HCL
 ## The hierarchy of the code structure explained:
 
@@ -71,3 +88,5 @@ Additionally, it defines a network interface block that attaches the virtual mac
 ### 5 - Main
 And the main file it's all of this together. 
 Each section or block is separated by a blank line, and nested blocks are indented to show their relationship to their parent block.
+
+
