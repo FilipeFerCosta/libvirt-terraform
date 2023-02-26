@@ -121,7 +121,7 @@ resource "libvirt_domain" "vm" {
 
   # TODO: Automate the creation of public network
   network_interface {
-    network_id      = "${libvirt_network.vm_public_network_id}"
+    network_id      = "${libvirt_network.vm_public_network.id}"
     network_name    = "${libvirt_network.vm_public_network.name}"
   }
 
