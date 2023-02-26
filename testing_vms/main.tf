@@ -71,7 +71,7 @@ data "template_file" "network_config" {
 
 # Defining resourcers 
 
-# Informing the POOL, where is 'housed' virtual machine boot volumes and the cloud init ISO files
+# Informing the POOL, where is 'housed' virtual machine boot volumes and the cloud init qcow2 files
 # Where the pool name is the vm name
 resource "libvirt_pool" "vm" {
     name = "${var.VM_HOSTNAME}_pool"
@@ -104,7 +104,7 @@ resource "libvirt_network" "vm_public_network" {
 
 # Defining the cloudinit network
 resource "libvirt_cloudinit_disk" "cloudinit" {
-    name            = "${var.VM_HOSTNAME}_cloudinit.iso"
+    name            = "${var.VM_HOSTNAME}_cloudinit.qcow2"
     user_data       = data.template_file.user_data.rendered
     network_config  = data.template_file.network_config.rendered
     pool            = libvirt_pool.vm.name
@@ -116,6 +116,11 @@ resource "libvirt_domain" "vm" {
   name      = "${var.VM_HOSTNAME}-${count.index}"
   memory    = "1024"
   vcpu      = 1
+  console {
+    type        = "pty"
+    target_port = "0"
+    target_type = "serial"
+  }
 
   cloudinit = "${libvirt_cloudinit_disk.cloudinit.id}"
 
@@ -125,22 +130,7 @@ resource "libvirt_domain" "vm" {
     network_name    = "${libvirt_network.vm_public_network.name}"
   }
 
-
-  console {
-    type            = "spices"
-    listen_type     = "address"
-    autoport        = true
-  }
-
-
   disk {
     volume_id = "${libvirt_volume.vm[count.index].id}"
   }
-
-  graphics {
-    type            = "spices"
-    listen_type     = "address"
-    autoport        = true
-  }
-
 }
